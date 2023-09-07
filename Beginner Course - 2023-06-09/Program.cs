@@ -1,8 +1,9 @@
+using Beginner_Course___2023_06_09;
 using Microsoft.AspNetCore.Builder;
-
 
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
+
 app.Use( async(context,next) =>
     {
     if (context.Request.Method == HttpMethods.Get && context.Request.Query["custom"]=="true")
@@ -13,6 +14,7 @@ app.Use( async(context,next) =>
 
         await next();
 });
-app.MapGet("/", () => "Hello World!");
 
+app.MapGet("/", () => "Hello World!");
+app.UseMiddleware<Middleware>();
 app.Run();
